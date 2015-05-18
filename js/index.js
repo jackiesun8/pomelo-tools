@@ -144,10 +144,6 @@ $(document).ready(function() {
 		$('#inputGate').attr('value', $.cookie('gate'))
 	}
 
-	var pomelo = window.pomelo
-	var http = window.browser_http
-	console.log(pomelo)
-	console.log(http)
 	$('#loginButton').click(function() {
 		console.log("login button is pressed")
 
