@@ -32,9 +32,9 @@ function checkAddress(who, address) {
 	return true;
 }
 
-function register(username, password, address) {
+function register(username, password, login_address, gate_address) {
 	var http = window.browser_http
-	http.request('http://' + address + '/register', {
+	http.request('http://' + login_address + '/register', {
 		type: 'POST',
 		data: {
 			username: username,
@@ -48,7 +48,7 @@ function register(username, password, address) {
 				console.log('register failed')
 			} else if (response.data.code == 200) {
 				console.log('register success,auto login again')
-				login(username, password, address)
+				login(username, password, login_address, gate_address)
 			} else {
 				console.log('no sense')
 			}
@@ -70,7 +70,7 @@ function login(username, password, login_address, gate_address) {
 		if (!err) {
 			if (response.data.code == 501) {
 				console.log('username not exist,auto register')
-				register(username, password, login_address)
+				register(username, password, login_address, gate_address)
 			} else if (response.data.code == 502) {
 				console.log('password is error')
 			} else if (response.data.code == 500) {
@@ -88,6 +88,7 @@ function login(username, password, login_address, gate_address) {
 }
 
 function connectToGameServer(uid, token, gate) {
+	console.log(uid, token, gate)
 	var pomelo = window.pomelo;
 
 	var route = 'gate.gateHandler.queryConnector';
