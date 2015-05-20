@@ -1,70 +1,52 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Pomelo Tools</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="bootstrap-3.3.4-dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="css/signin.css" rel="stylesheet">
-
-    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-    <script src="jquery/jquery-1.11.3.min.js"></script>
-    <script src="jquery/jquery.cookie.js"></script>
-
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="js/index.js"></script>
-    <script src="bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
-    <script src="lib/dist/pomelo-cocos2d-js.min.js"></script>
-    
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-
-  <body>
-
-    <div class="container">
-
-      <form class="form-signin">
-        <h2 class="form-signin-heading">账号登陆</h2>
-        <label for="inputUserName" class="sr-only">用户名</label>
-        <input type="text" id="inputUserName" class="form-control" placeholder="用户名" required autofocus>
-
-        <div style='height:5px;clear:both;display:block'></div>
-
-        <label for="inputPassword" class="sr-only">密码</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
-
-        <label for="inputLogin" class="sr-only">登陆服地址:端口</label>
-        <input type="text" id="inputLogin" class="form-control" placeholder="登陆服地址:端口" required>
-
-        <div style='height:5px;clear:both;display:block'></div>
-
-        <label for="inputGate" class="sr-only">网关服地址:端口</label>
-        <input type="text" id="inputGate" class="form-control" placeholder="网关服地址:端口" required>
-
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="remember" value="1" checked>记住填写的信息
-          </label>
-        </div>
-        <!-- <input type="button" name="submit" value="登陆" class="btn btn-lg btn-primary btn-block">  -->
-        <button class="btn btn-lg btn-primary btn-block" type="button" id="loginButton">登陆</button>
-
-      </form>
-
-    </div> <!-- /container -->
-
-  </body>
-</html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Pomelo Tools</title>
+        <!-- Bootstrap core CSS -->
+        <link href="bootstrap-3.3.4-dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="css/signin.css" rel="stylesheet">
+        <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+        <script src="jquery/jquery-1.11.3.min.js"></script>
+        
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <script src="bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+        <script src="lib/dist/pomelo-cocos2d-js.min.js"></script>
+        <script src="js/index.js"></script>
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="container">
+            <form class="form-signin">
+                <h2 class="form-signin-heading">账号登陆</h2>
+                <label for="inputUserName" class="sr-only">用户名</label>
+                <input type="text" id="inputUserName" class="form-control" placeholder="用户名" required autofocus>
+                <div style='height:5px;clear:both;display:block'></div>
+                <label for="inputPassword" class="sr-only">密码</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+                <label for="inputLogin" class="sr-only">登陆服地址:端口</label>
+                <input type="text" id="inputLogin" class="form-control" placeholder="登陆服地址:端口" required>
+                <div style='height:5px;clear:both;display:block'></div>
+                <label for="inputGate" class="sr-only">网关服地址:端口</label>
+                <input type="text" id="inputGate" class="form-control" placeholder="网关服地址:端口" required>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="remember" value="1" checked>记住填写的信息
+                    </label>
+                </div>
+                
+                <button class="btn btn-lg btn-primary btn-block" type="button" id="loginButton">登陆</button>
+            </form>
+            </div> <!-- /container -->
+        </body>
+    </html>

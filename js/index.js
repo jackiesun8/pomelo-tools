@@ -77,7 +77,11 @@ function login(username, password, login_address, gate_address) {
 				console.log('login failed')
 			} else if (response.data.code == 200) {
 				console.log('login success')
-				connectToGameServer(response.data.uid, response.data.token, gate_address)
+				var localStorage = window.web_storage().localStorage
+				localStorage.set('temp_uid', response.data.uid)
+				localStorage.set('temp_token', response.data.token)
+				localStorage.set('temp_gate', gate_address)
+				window.location.href = 'main.html'
 			} else {
 				console.log('no sense')
 			}
@@ -86,73 +90,31 @@ function login(username, password, login_address, gate_address) {
 		}
 	})
 }
-
-function connectToGameServer(uid, token, gate) {
-	console.log(uid, token, gate)
-	var pomelo = window.pomelo;
-
-	var route = 'gate.gateHandler.queryConnector';
-	var gate_ip_port = gate.split(':')
-
-	pomelo.init({
-			host: gate_ip_port[0],
-			port: gate_ip_port[1],
-			log: true
-		},
-		function() {
-			pomelo.request(route, {
-				uid: uid
-			}, function(data) {
-				if (data.code == 600) {
-					return console.log('no connector available')
-				} else if (data.code == 500) {
-					return console.log('gate.gateHandler.queryConnector failed')
-				} else if (data.code == 200) {
-					console.log('gate.gateHandler.queryConnector success')
-				} else {
-					return console.log('no sense')
-				}
-
-				pomelo.disconnect();
-
-				pomelo.init({
-					host: data.host,
-					port: data.port,
-					log: true
-				}, function() {
-					var route = "connector.connectorHandler.connect";
-					pomelo.request(route, {
-						token: token
-					}, function(data) {
-						console.log(data.code);
-					});
-				});
-			});
-		});
-}
 $(document).ready(function() {
 	console.log('the document index is ready now')
-	if ($.cookie('username')) {
-		$('#inputUserName').attr('value', $.cookie('username'))
+
+	var localStorage = window.web_storage().localStorage
+	if (localStorage.get('username')) {
+		$('#inputUserName').attr('value', localStorage.get('username'))
 	}
-	if ($.cookie('password')) {
-		$('#inputPassword').attr('value', $.cookie('password'))
+	if (localStorage.get('password')) {
+		$('#inputPassword').attr('value', localStorage.get('password'))
 	}
-	if ($.cookie('login')) {
-		$('#inputLogin').attr('value', $.cookie('login'))
+	if (localStorage.get('login')) {
+		$('#inputLogin').attr('value', localStorage.get('login'))
 	}
-	if ($.cookie('gate')) {
-		$('#inputGate').attr('value', $.cookie('gate'))
+	if (localStorage.get('gate')) {
+		$('#inputGate').attr('value', localStorage.get('gate'))
 	}
 
 	$('#loginButton').click(function() {
-		console.log("login button is pressed")
+		console.log('login button is pressed')
 
 		var username = $('#inputUserName').val();
 		var password = $('#inputPassword').val();
 		var login_ip_port = $('#inputLogin').val();
 		var gate_ip_port = $('#inputGate').val();
-		var isRemember = $('input[name="remember"]').is(":checked")
+		var isRemember = $('input[name="remember"]').is(':checked')
 		if (!username) {
 			return console.log('username is error')
 		}
@@ -166,10 +128,10 @@ $(document).ready(function() {
 		console.log(login_ip_port)
 		console.log(gate_ip_port)
 		if (isRemember) {
-			$.cookie('username', username)
-			$.cookie('password', password)
-			$.cookie('login', login_ip_port)
-			$.cookie('gate', gate_ip_port)
+			localStorage.set('username', username)
+			localStorage.set('password', password)
+			localStorage.set('login', login_ip_port)
+			localStorage.set('gate', gate_ip_port)
 		}
 		login(username, password, login_ip_port, gate_ip_port)
 	})
