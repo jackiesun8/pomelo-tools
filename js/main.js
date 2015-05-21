@@ -12,7 +12,7 @@ function tip(tipString) {
 function login_success() {
 	setTimeout(function() {
 		$.isLoading("hide");
-	}, 1000);
+	}, 500);
 }
 
 function connectToGameServer(uid, token, gate) {
@@ -111,18 +111,25 @@ $(document).ready(function() {
 		console.log(obj)
 		if (!isNotify) {
 			pomelo.request(interface, obj, function(data) {
-				console.log(data.stringify)
+				//console.log(data.stringify)
+				$("#outputResponse").JSONView(data);
 			})
 		} else {
-
+			pomelo.notify(interface, obj)
 		}
 	});
 
 	$('input[name="isNotify"]').click(function() {
 		if ($(this).is(':checked')) {
-			$('#outputResponse').attr('disabled', 'true')
+			$('#outputGroup').hide()
 		} else {
-			$('#outputResponse').removeAttr('disabled')
+			$('#outputGroup').show()
 		}
+	});
+	$('#collapse-btn').on('click', function() {
+		$('#outputResponse').JSONView('collapse');
+	});
+	$('#expand-btn').on('click', function() {
+		$('#outputResponse').JSONView('expand');
 	});
 });

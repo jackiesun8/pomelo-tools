@@ -21,6 +21,7 @@
     <script src="jquery/jquery-1.11.3.min.js"></script>
     <script src="jquery/jquery.isloading.min.js"></script>
     <script src="jquery/jquery.jsonview.js"></script>
+    <!--
     <script type="text/javascript">
     var json = {
         "hey": "guy",
@@ -64,11 +65,11 @@
             $('#json').JSONView('toggle', 2);
         });
     });
-    </script>
+    </script> 
+    -->
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
     <script src="lib/dist/pomelo-cocos2d-js.min.js"></script>
-    <script src="js/vendor/holder.js"></script>
     <script src="js/main.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -78,7 +79,7 @@
 </head>
 
 <body>
-
+    <!--
     <h2>Data</h2>
     <button id="collapse-btn">Collapse</button>
     <button id="expand-btn">Expand</button>
@@ -88,7 +89,7 @@
     <div id="json"></div>
     <h2>Data Collapsed</h2>
     <div id="json-collapsed"></div>
-
+    -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -151,14 +152,17 @@
                 </div>
                 <div style='height:5px;clear:both;display:block'></div>
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">请求</span>
-                    <input type="text" class="form-control" placeholder="uid:1" aria-describedby="basic-addon1" id="inputRequest">
+                    <span class="input-group-addon" id="basic-addon2">请求</span>
+                    <input type="text" class="form-control" placeholder="uid:1" aria-describedby="basic-addon2" id="inputRequest">
                 </div>
                 <div style='height:5px;clear:both;display:block'></div>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">响应</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" id="outputResponse">
+                <div class="input-group" id="outputGroup">
+                    <span class="input-group-addon" id="basic-addon3">响应</span>
+                    <div id="outputResponse" class="input-div"></div>
                 </div>
+                <div style='height:5px;clear:both;display:block'></div>
+                <button id="collapse-btn" class="btn btn-primary">Collapse</button>
+                <button id="expand-btn" class="btn btn-primary">Expand</button>
                 <div style='height:20px;clear:both;display:block'></div>
                 <!-- <div class="row placeholders">
                         <div class="col-xs-6 col-sm-3 placeholder">
