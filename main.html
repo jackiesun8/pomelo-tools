@@ -11,6 +11,7 @@
     <title>Pomelo Tools</title>
     <!-- Bootstrap core CSS -->
     <link href="bootstrap-3.3.4-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap-3.3.4-dist/css/bootstrap-table.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <!-- <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet"> -->
     <link href="css/font-awesome.css" rel="stylesheet">
@@ -69,6 +70,7 @@
     -->
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+    <script src="bootstrap-3.3.4-dist/js/bootstrap-table.min.js"></script>
     <script src="lib/dist/pomelo-cocos2d-js.min.js"></script>
     <script src="js/main.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -147,7 +149,7 @@
                     <span class="input-group-addon" id="basic-addon1">接口</span>
                     <input type="text" class="form-control" placeholder="gate.gateHandler.queryConnector" aria-describedby="basic-addon1" id="inputInterface">
                     <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" id="goButton">Go!</button>
+                            <button class="btn btn-default" type="button" id="goButton">发送</button>
                         </span>
                 </div>
                 <div style='height:5px;clear:both;display:block'></div>
@@ -157,10 +159,10 @@
                 </div>
                 <div style='height:5px;clear:both;display:block'></div>
                 <div class="input-group" id="outputGroup">
-                    <span class="input-group-addon" id="basic-addon3">响应</span>
+                    <span class="input-group-addon">响应</span>
                     <div id="outputResponse" class="input-div"></div>
                 </div>
-                <div style='height:5px;clear:both;display:block'></div>
+                <div style='height:10px;clear:both;display:block'></div>
                 <button id="collapse-btn" class="btn btn-primary">Collapse</button>
                 <button id="expand-btn" class="btn btn-primary">Expand</button>
                 <div style='height:20px;clear:both;display:block'></div>
@@ -187,6 +189,22 @@
                         </div>
                     </div> -->
                 <h1 class="page-header">推送</h1>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon4">接口</span>
+                    <input type="text" class="form-control" placeholder="onChat" aria-describedby="basic-addon4" id="inputInterfaceListen">
+                    <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" id="addButton">添加</button>
+                        </span>
+                </div>
+                <div style='height:20px;clear:both;display:block'></div>
+                <table data-toggle="table" id="pushTable">
+                    <thead>
+                        <tr>
+                            <th data-field="interface">接口</th>
+                            <th data-field="push">推送</th>
+                        </tr>
+                    </thead>
+                </table>
                 <!--           <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>

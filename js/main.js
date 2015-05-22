@@ -31,7 +31,7 @@ function connectToGameServer(uid, token, gate) {
 			pomelo.request(route, {
 				uid: uid
 			}, function(data) {
-				if (data.code == 600) {
+				if (data.code == 2001) {
 					tip('连接服务器失败，2秒后自动跳转')
 					return console.log('no connector available')
 				} else if (data.code == 500) {
@@ -111,7 +111,6 @@ $(document).ready(function() {
 		console.log(obj)
 		if (!isNotify) {
 			pomelo.request(interface, obj, function(data) {
-				//console.log(data.stringify)
 				$("#outputResponse").JSONView(data);
 			})
 		} else {
@@ -132,4 +131,13 @@ $(document).ready(function() {
 	$('#expand-btn').on('click', function() {
 		$('#outputResponse').JSONView('expand');
 	});
+	$('#addButton').click(function() {
+		console.log('add button is pressed');
+		var interface = $('#inputInterfaceListen').val()
+		console.log(interface)
+		$('#pushTable').bootstrapTable('append', {
+			interface: 'onChat',
+			push: '<div class="input-div"></div>'
+		})
+	})
 });
