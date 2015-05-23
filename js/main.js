@@ -81,6 +81,8 @@ function connectToGameServer(uid, token, gate) {
 }
 
 $(document).ready(function() {
+	var format = window.string_format
+	format.extend(String.prototype)
 	$.isLoading({
 		text: '连接服务器中...'
 	})
@@ -88,7 +90,6 @@ $(document).ready(function() {
 	var uid = localStorage.get('temp_uid')
 	var token = localStorage.get('temp_token')
 	var gate = localStorage.get('temp_gate')
-
 	if (!uid || !token || !gate) {
 		tip('连接失败，参数不正确，2秒后自动跳转')
 	}
@@ -96,7 +97,22 @@ $(document).ready(function() {
 
 	console.log('the document main is ready now')
 	var pomelo = window.pomelo
-
+	var interfacesStored = localStorage.get('interfacesStored') || {}
+	if (interfacesStored) {
+		for (var interface in interfacesStored) {
+			$('#pushTable').bootstrapTable('append', {
+				interface: interface,
+				push: '<div class="input-div" id="{}"></div>'.format(interface)
+			})
+			pomelo.on(interface, function(data) {
+				console.log(data)
+				$("#{}".format(interface).JSONView(data))
+			})
+		}
+	}
+	pomelo.on('helloworld', function(data) {
+		console.log(data)
+	})
 	$('#goButton').click(function() {
 		console.log('go button is pressed')
 		var interface = $('#inputInterface').val()
@@ -117,7 +133,6 @@ $(document).ready(function() {
 			pomelo.notify(interface, obj)
 		}
 	});
-
 	$('input[name="isNotify"]').click(function() {
 		if ($(this).is(':checked')) {
 			$('#outputGroup').hide()
@@ -135,9 +150,22 @@ $(document).ready(function() {
 		console.log('add button is pressed');
 		var interface = $('#inputInterfaceListen').val()
 		console.log(interface)
+
+		if (!interface) {
+			return console.log('interface is empty')
+		}
+
+		var interfacesStored = localStorage.get('interfacesStored') || {}
+		console.log(interfacesStored)
+		if (interfacesStored[interface]) {
+			return console.log('interface is already exist')
+		}
+		interfacesStored[interface] = 1
+		localStorage.set('interfacesStored', interfacesStored)
+
 		$('#pushTable').bootstrapTable('append', {
-			interface: 'onChat',
-			push: '<div class="input-div"></div>'
+			interface: interface,
+			push: '<div class="input-div" id="{}"></div>'.format(interface)
 		})
 	})
 });

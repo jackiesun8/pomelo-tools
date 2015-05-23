@@ -12,11 +12,12 @@
     "lib"
   ],
   "dependencies": {
-    "web-storage": "1.0.0",
     "browser-http": "^4.0.2",
     "pomelo-jsclient-websocket": "0.1.1",
     "pomelo-protobuf": "0.4.0",
-    "pomelo-protocol": "0.1.5"
+    "pomelo-protocol": "0.1.5",
+    "string-format": "^0.5.0",
+    "web-storage": "1.0.0"
   },
   "author": "jackiesun",
   "license": "MIT",
