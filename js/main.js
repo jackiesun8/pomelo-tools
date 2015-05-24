@@ -80,6 +80,21 @@ function connectToGameServer(uid, token, gate) {
 		});
 }
 
+function listenInterface(interface) {
+	console.log('listening {}'.format(interface))
+	var localStorage = window.web_storage().localStorage
+	pomelo.on(interface, function(data) {
+		var interface = data.route
+		var interfacesStored = localStorage.get('interfacesStored')
+		console.log(data)
+		console.log('interface "{}" has push data'.format(interface))
+		var dataArray = interfacesStored[interface]
+		dataArray.unshift(data)
+		localStorage.set('interfacesStored', interfacesStored)
+		$("#{}".format(interface)).JSONView(dataArray)
+	})
+}
+
 function reloadInterfaces() {
 	var localStorage = window.web_storage().localStorage
 	var interfacesStored = localStorage.get('interfacesStored')
@@ -91,17 +106,8 @@ function reloadInterfaces() {
 			})
 			interfacesStored[interface] = []
 
-			console.log('listening {}'.format(interface))
-			pomelo.on(interface, function(data) {
-				var interface = data.route
-				var interfacesStored = localStorage.get('interfacesStored')
-				console.log(data)
-				console.log('interface "{}" has push data'.format(interface))
-				var dataArray = interfacesStored[interface]
-				dataArray.push(data)
-				localStorage.set('interfacesStored', interfacesStored)
-				$("#{}".format(interface)).JSONView(dataArray)
-			})
+
+			listenInterface(interface)
 		}
 		localStorage.set('interfacesStored', interfacesStored)
 	}
@@ -145,6 +151,7 @@ $(document).ready(function() {
 		console.log(obj)
 		if (!isNotify) {
 			pomelo.request(interface, obj, function(data) {
+				console.error('request has response')
 				$("#outputResponse").JSONView(data);
 			})
 		} else {
@@ -182,7 +189,7 @@ $(document).ready(function() {
 		}
 		interfacesStored[interface] = []
 		localStorage.set('interfacesStored', interfacesStored)
-
+		listenInterface(interface)
 		$('#pushTable').bootstrapTable('append', {
 			interface: interface,
 			push: '<div class="input-div" id="{}"></div>'.format(interface)
