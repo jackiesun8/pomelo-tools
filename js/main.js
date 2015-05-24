@@ -80,6 +80,34 @@ function connectToGameServer(uid, token, gate) {
 		});
 }
 
+function reloadInterfaces() {
+	var localStorage = window.web_storage().localStorage
+	var interfacesStored = localStorage.get('interfacesStored')
+	if (interfacesStored) {
+		for (var interface in interfacesStored) {
+			$('#pushTable').bootstrapTable('append', {
+				interface: interface,
+				push: '<div class="input-div" id="{}"></div>'.format(interface)
+			})
+			interfacesStored[interface] = []
+
+			console.log('listening {}'.format(interface))
+			pomelo.on(interface, function(data) {
+				var interface = data.route
+				var interfacesStored = localStorage.get('interfacesStored')
+				console.log(data)
+				console.log('interface "{}" has push data'.format(interface))
+				var dataArray = interfacesStored[interface]
+				dataArray.push(data)
+				localStorage.set('interfacesStored', interfacesStored)
+				$("#{}".format(interface)).JSONView(dataArray)
+			})
+		}
+		localStorage.set('interfacesStored', interfacesStored)
+	}
+
+}
+
 $(document).ready(function() {
 	var format = window.string_format
 	format.extend(String.prototype)
@@ -97,27 +125,17 @@ $(document).ready(function() {
 
 	console.log('the document main is ready now')
 	var pomelo = window.pomelo
-	var interfacesStored = localStorage.get('interfacesStored') || {}
-	if (interfacesStored) {
-		for (var interface in interfacesStored) {
-			$('#pushTable').bootstrapTable('append', {
-				interface: interface,
-				push: '<div class="input-div" id="{}"></div>'.format(interface)
-			})
-			pomelo.on(interface, function(data) {
-				console.log(data)
-				$("#{}".format(interface).JSONView(data))
-			})
-		}
-	}
-	pomelo.on('helloworld', function(data) {
-		console.log(data)
-	})
+	reloadInterfaces()
+
 	$('#goButton').click(function() {
 		console.log('go button is pressed')
 		var interface = $('#inputInterface').val()
 		var request = $('#inputRequest').val()
 		var isNotify = $('input[name="isNotify"]').is(':checked')
+
+		if (!interface) {
+			return console.log('interface is empty')
+		}
 
 		console.log(interface)
 		console.log(request)
@@ -146,6 +164,8 @@ $(document).ready(function() {
 	$('#expand-btn').on('click', function() {
 		$('#outputResponse').JSONView('expand');
 	});
+
+
 	$('#addButton').click(function() {
 		console.log('add button is pressed');
 		var interface = $('#inputInterfaceListen').val()
@@ -160,7 +180,7 @@ $(document).ready(function() {
 		if (interfacesStored[interface]) {
 			return console.log('interface is already exist')
 		}
-		interfacesStored[interface] = 1
+		interfacesStored[interface] = []
 		localStorage.set('interfacesStored', interfacesStored)
 
 		$('#pushTable').bootstrapTable('append', {
@@ -168,4 +188,17 @@ $(document).ready(function() {
 			push: '<div class="input-div" id="{}"></div>'.format(interface)
 		})
 	})
+	$('#collapse-btn-push').on('click', function() {
+		var interfacesStored = localStorage.get('interfacesStored') || {}
+		for (var interface in interfacesStored) {
+			$("#{}".format(interface)).JSONView('collapse')
+		}
+	});
+	$('#expand-btn-push').on('click', function() {
+		var interfacesStored = localStorage.get('interfacesStored') || {}
+		for (var interface in interfacesStored) {
+			$("#{}".format(interface)).JSONView('expand')
+		}
+	});
+
 });

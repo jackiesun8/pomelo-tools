@@ -197,14 +197,42 @@
                         </span>
                 </div>
                 <div style='height:20px;clear:both;display:block'></div>
-                <table data-toggle="table" id="pushTable">
+                <div id="custom-toolbar">
+                    <button id="collapse-btn-push" class="btn btn-primary">Collapse</button>
+                    <button id="expand-btn-push" class="btn btn-primary">Expand</button>
+                </div>
+                <table data-toggle="table" data-search="true" data-toolbar="#custom-toolbar" id="pushTable">
                     <thead>
                         <tr>
-                            <th data-field="interface">接口</th>
-                            <th data-field="push">推送</th>
+                            <th data-field="interface" data-align="left" data-valign="middle">接口</th>
+                            <th data-field="push" data-align="left" data-valign="middle">推送</th>
+                            <th data-field="delete" data-formatter="operateFormatter" data-events="operateEvents" data-align="center" data-valign="middle">删除</th>
                         </tr>
                     </thead>
                 </table>
+                <script>
+                function operateFormatter(value, row, index) {
+                    return [
+                        '<a class="remove ml10" href="javascript:void(0)" title="Remove">',
+                        '<i class="glyphicon glyphicon-remove"></i>',
+                        '</a>'
+                    ].join('');
+                }
+                window.operateEvents = {
+                    'click .remove': function(e, value, row, index) {
+                        //alert('You click remove icon, row: ' + JSON.stringify(row));
+                        var localStorage = window.web_storage().localStorage
+                        var interfacesStored = localStorage.get('interfacesStored') 
+                        delete interfacesStored[row.interface]
+                        localStorage.set('interfacesStored',interfacesStored)
+                        console.log(value, row, index);
+                        $('#pushTable').bootstrapTable('remove', {
+                            field: 'interface',
+                            values: [row.interface]
+                        });
+                    }
+                };
+                </script>
                 <!--           <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
