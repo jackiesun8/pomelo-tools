@@ -90,6 +90,33 @@ function login(username, password, login_address, gate_address) {
 		}
 	})
 }
+
+function guestLogin(login_address, gate_address, isRemember) {
+	var http = window.browser_http
+	http.request('http://' + login_address + '/auto_register', {
+		type: 'POST',
+		data: {}
+	}, function(response, err) {
+		var username = response.data.username
+		var password = response.data.password
+		if (!username) {
+			return console.log('username returned is error')
+		}
+		if (!password) {
+			return console.log('password returned is error')
+		}
+		console.log('username returned is:' + username)
+		console.log('password returned is:' + password)
+		if (isRemember) {
+			var localStorage = window.web_storage().localStorage
+			localStorage.set('username', username)
+			localStorage.set('password', password)
+			$('#inputUserName').attr('value', localStorage.get('username'))
+			$('#inputPassword').attr('value', localStorage.get('password'))
+		}
+		login(username, password, login_address, gate_address)
+	})
+}
 $(document).ready(function() {
 	console.log('the document index is ready now')
 
@@ -134,5 +161,20 @@ $(document).ready(function() {
 			localStorage.set('gate', gate_ip_port)
 		}
 		login(username, password, login_ip_port, gate_ip_port)
+	})
+	$('#guestLoginButton').click(function() {
+		console.log('guest login button is pressed')
+		var login_ip_port = $('#inputLogin').val();
+		var gate_ip_port = $('#inputGate').val();
+		var isRemember = $('input[name="remember"]').is(':checked')
+		if (!checkAddress('login', login_ip_port)) return;
+		if (!checkAddress('gate', gate_ip_port)) return;
+		console.log(login_ip_port)
+		console.log(gate_ip_port)
+		if (isRemember) {
+			localStorage.set('login', login_ip_port)
+			localStorage.set('gate', gate_ip_port)
+		}
+		guestLogin(login_ip_port, gate_ip_port, isRemember)
 	})
 });
