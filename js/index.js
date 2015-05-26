@@ -93,7 +93,7 @@ function login(username, password, login_address, gate_address) {
 
 function guestLogin(login_address, gate_address, isRemember) {
 	var http = window.browser_http
-	http.request('http://' + login_address + '/auto_register', {
+	http.request('http://' + login_address + '/auto-register', {
 		type: 'POST',
 		data: {}
 	}, function(response, err) {
