@@ -84,7 +84,6 @@ function listenInterface(interface) {
 	console.log('listening {}'.format(interface))
 	var localStorage = window.web_storage().localStorage
 	pomelo.on(interface, function(data) {
-		var interface = data.route
 		var interfacesStored = localStorage.get('interfacesStored')
 		console.log(data)
 		console.log('interface "{}" has push data'.format(interface))
@@ -105,8 +104,6 @@ function reloadInterfaces() {
 				push: '<div class="input-div" id="{}"></div>'.format(interface)
 			})
 			interfacesStored[interface] = []
-
-
 			listenInterface(interface)
 		}
 		localStorage.set('interfacesStored', interfacesStored)
@@ -151,7 +148,6 @@ $(document).ready(function() {
 		console.log(obj)
 		if (!isNotify) {
 			pomelo.request(interface, obj, function(data) {
-				console.error('request has response')
 				$("#outputResponse").JSONView(data);
 			})
 		} else {
