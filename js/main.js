@@ -84,6 +84,7 @@ function listenInterface(interface) {
 	console.log('listening {}'.format(interface))
 	var localStorage = window.web_storage().localStorage
 	pomelo.on(interface, function(data) {
+		console.error('receive push,interface is:{}'.format(interface))
 		var interfacesStored = localStorage.get('interfacesStored')
 		console.log(data)
 		console.log('interface "{}" has push data'.format(interface))
@@ -111,6 +112,13 @@ function reloadInterfaces() {
 
 }
 
+function requestInterface(interface, obj) {
+	pomelo.request(interface, obj, function(data) {
+		console.error('receive response,interface is:{}'.format(interface))
+		$("#outputResponse").JSONView(data);
+	})
+}
+
 $(document).ready(function() {
 	var format = window.string_format
 	format.extend(String.prototype)
@@ -131,6 +139,7 @@ $(document).ready(function() {
 	reloadInterfaces()
 
 	$('#goButton').click(function() {
+		$("#outputResponse").JSONView({});
 		console.log('go button is pressed')
 		var interface = $('#inputInterface').val()
 		var request = $('#inputRequest').val()
@@ -147,9 +156,7 @@ $(document).ready(function() {
 
 		console.log(obj)
 		if (!isNotify) {
-			pomelo.request(interface, obj, function(data) {
-				$("#outputResponse").JSONView(data);
-			})
+			requestInterface(interface, obj)
 		} else {
 			pomelo.notify(interface, obj)
 		}

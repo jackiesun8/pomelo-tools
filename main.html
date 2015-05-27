@@ -147,10 +147,22 @@
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">接口</span>
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
                     <input type="text" class="form-control" placeholder="gate.gateHandler.queryConnector" aria-describedby="basic-addon1" id="inputInterface">
                     <span class="input-group-btn">
                             <button class="btn btn-default" type="button" id="goButton">发送</button>
-                        </span>
+                    </span>
                 </div>
                 <div style='height:5px;clear:both;display:block'></div>
                 <div class="input-group">
@@ -201,7 +213,7 @@
                     <button id="collapse-btn-push" class="btn btn-primary">Collapse</button>
                     <button id="expand-btn-push" class="btn btn-primary">Expand</button>
                 </div>
-                <table data-toggle="table" data-search="true" data-toolbar="#custom-toolbar" id="pushTable">
+                <table data-toggle="table" data-toolbar="#custom-toolbar" id="pushTable">
                     <thead>
                         <tr>
                             <th data-field="interface" data-align="left" data-valign="middle">接口</th>
@@ -222,9 +234,9 @@
                     'click .remove': function(e, value, row, index) {
                         //alert('You click remove icon, row: ' + JSON.stringify(row));
                         var localStorage = window.web_storage().localStorage
-                        var interfacesStored = localStorage.get('interfacesStored') 
+                        var interfacesStored = localStorage.get('interfacesStored')
                         delete interfacesStored[row.interface]
-                        localStorage.set('interfacesStored',interfacesStored)
+                        localStorage.set('interfacesStored', interfacesStored)
                         console.log(value, row, index);
                         $('#pushTable').bootstrapTable('remove', {
                             field: 'interface',
