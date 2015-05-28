@@ -12,6 +12,7 @@
     <!-- Bootstrap core CSS -->
     <link href="bootstrap-3.3.4-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="bootstrap-3.3.4-dist/css/bootstrap-table.min.css" rel="stylesheet">
+    <link href="bootstrap-3.3.4-dist/css/bootstrap-select.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <!-- <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet"> -->
     <link href="css/font-awesome.css" rel="stylesheet">
@@ -71,6 +72,7 @@
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
     <script src="bootstrap-3.3.4-dist/js/bootstrap-table.min.js"></script>
+    <script src="bootstrap-3.3.4-dist/js/bootstrap-select.min.js"></script>
     <script src="lib/dist/pomelo-cocos2d-js.min.js"></script>
     <script src="js/main.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -145,20 +147,17 @@
                         <input type="checkbox" name="isNotify" id="isNotify">选中发送通知消息(请求响应不要选中)
                     </label>
                 </div>
+                <select class="selectpicker remove-example">
+                    <option value="Mustard">Mustard</option>
+                    <option value="Ketchup">Ketchup</option>
+                    <option value="Relish">Relish</option>
+                </select>
+                <button class="btn btn-warning rm-mustard">Remove Mustard</button>
+                <button class="btn btn-danger rm-ketchup">Remove Ketchup</button>
+                <button class="btn btn-success rm-relish">Remove Relish</button>
+                <div style='height:5px;clear:both;display:block'></div>
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">接口</span>
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li><a href="#">Separated link</a></li>
-                        </ul>
-                    </div>
                     <input type="text" class="form-control" placeholder="gate.gateHandler.queryConnector" aria-describedby="basic-addon1" id="inputInterface">
                     <span class="input-group-btn">
                             <button class="btn btn-default" type="button" id="goButton">发送</button>
