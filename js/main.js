@@ -84,7 +84,7 @@ function listenInterface(interface) {
 	console.log('listening {}'.format(interface))
 	var localStorage = window.web_storage().localStorage
 	pomelo.on(interface, function(data) {
-		console.error('receive push,interface is:{}'.format(interface))
+		console.debug('receive push,interface is:{}'.format(interface))
 		var interfacesStored = localStorage.get('interfacesStored')
 		console.log(data)
 		console.log('interface "{}" has push data'.format(interface))
@@ -109,12 +109,25 @@ function reloadInterfaces() {
 		}
 		localStorage.set('interfacesStored', interfacesStored)
 	}
+}
 
+function reloadRequestInterfaces() {
+	var localStorage = window.web_storage().localStorage
+	var requestInterfacesStored = localStorage.get('requestInterfacesStored')
+	if (requestInterfacesStored) {
+		if ('game.gameHandler.enterGame' in requestInterfacesStored) {
+			$('#inputInterface').attr('value', 'game.gameHandler.enterGame')
+		}
+		for (var interface in requestInterfacesStored) {
+			$('#select-interface').append('<option value={}>{}</option>'.format(interface, interface))
+		}
+		$('#select-interface').selectpicker('refresh');
+	}
 }
 
 function requestInterface(interface, obj) {
 	pomelo.request(interface, obj, function(data) {
-		console.error('receive response,interface is:{}'.format(interface))
+		console.debug('receive response,interface is:{}'.format(interface))
 		$("#outputResponse").JSONView(data);
 	})
 }
@@ -137,7 +150,7 @@ $(document).ready(function() {
 	console.log('the document main is ready now')
 	var pomelo = window.pomelo
 	reloadInterfaces()
-
+	reloadRequestInterfaces()
 	$('#goButton').click(function() {
 		$("#outputResponse").JSONView({});
 		console.log('go button is pressed')
@@ -149,6 +162,15 @@ $(document).ready(function() {
 			return console.log('interface is empty')
 		}
 
+		var requestInterfacesStored = localStorage.get('requestInterfacesStored') || {}
+		console.log(requestInterfacesStored[interface])
+
+		if (!(interface in requestInterfacesStored)) {
+			requestInterfacesStored[interface] = request
+			localStorage.set('requestInterfacesStored', requestInterfacesStored)
+			$('#select-interface').append('<option value={}>{}</option>'.format(interface, interface))
+			$('#select-interface').selectpicker('refresh');
+		}
 		console.log(interface)
 		console.log(request)
 		console.log(isNotify)
@@ -210,9 +232,29 @@ $(document).ready(function() {
 			$("#{}".format(interface)).JSONView('expand')
 		}
 	});
-	$('.rm-mustard').click(function() {
-		$('.remove-example').find('[value=Mustard]').remove();
-		$('.remove-example').selectpicker('refresh');
-	});
+	$('#rm-interface').click(function() {
+		console.log('rm-interface button click')
+		var interface = $('#select-interface').find("option:selected").val()
+		console.log('remove interface:{}'.format(interface))
 
+		var requestInterfacesStored = localStorage.get('requestInterfacesStored')
+		if (requestInterfacesStored) {
+			delete requestInterfacesStored[interface]
+			localStorage.set('requestInterfacesStored', requestInterfacesStored)
+		}
+
+		$('#select-interface').find('[value="{}"]'.format(interface)).remove();
+		$('#select-interface').selectpicker('refresh');
+	});
+	$('#select-interface').on('change', function() {
+		var interface = $(this).find("option:selected").val();
+		console.log(interface);
+		var requestInterfacesStored = localStorage.get('requestInterfacesStored')
+		if (requestInterfacesStored) {
+			console.log('update interface and request')
+			param = requestInterfacesStored[interface]
+			$('#inputInterface').attr('value', interface)
+			$('#inputRequest').attr('value', param)
+		}
+	});
 });
