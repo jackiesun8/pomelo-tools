@@ -116,7 +116,7 @@ function reloadRequestInterfaces() {
 	var requestInterfacesStored = localStorage.get('requestInterfacesStored')
 	if (requestInterfacesStored) {
 		if ('game.gameHandler.enterGame' in requestInterfacesStored) {
-			$('#inputInterface').attr('value', 'game.gameHandler.enterGame')
+			$('#inputInterface').val('game.gameHandler.enterGame')
 		}
 		for (var interface in requestInterfacesStored) {
 			$('#select-interface').append('<option value={}>{}</option>'.format(interface, interface))
@@ -163,14 +163,14 @@ $(document).ready(function() {
 		}
 
 		var requestInterfacesStored = localStorage.get('requestInterfacesStored') || {}
-		console.log(requestInterfacesStored[interface])
-
 		if (!(interface in requestInterfacesStored)) {
-			requestInterfacesStored[interface] = request
-			localStorage.set('requestInterfacesStored', requestInterfacesStored)
 			$('#select-interface').append('<option value={}>{}</option>'.format(interface, interface))
 			$('#select-interface').selectpicker('refresh');
 		}
+		console.log(requestInterfacesStored[interface])
+		requestInterfacesStored[interface] = request
+		localStorage.set('requestInterfacesStored', requestInterfacesStored)
+
 		console.log(interface)
 		console.log(request)
 		console.log(isNotify)
@@ -245,6 +245,8 @@ $(document).ready(function() {
 
 		$('#select-interface').find('[value="{}"]'.format(interface)).remove();
 		$('#select-interface').selectpicker('refresh');
+		$('#inputInterface').val('')
+		$('#inputRequest').val('')
 	});
 	$('#select-interface').on('change', function() {
 		var interface = $(this).find("option:selected").val();
@@ -253,8 +255,8 @@ $(document).ready(function() {
 		if (requestInterfacesStored) {
 			console.log('update interface and request')
 			param = requestInterfacesStored[interface]
-			$('#inputInterface').attr('value', interface)
-			$('#inputRequest').attr('value', param)
+			$('#inputInterface').val(interface)
+			$('#inputRequest').val(param)
 		}
 	});
 });
